@@ -9,9 +9,7 @@ use wrac_clap_adapter::{
     GuiConfiguration, GuiSize, HostGuiResizeRequester, HostParameterEditNotifier, PluginError,
     PluginResult,
 };
-use wrac_wxp_gui::{
-    DpiConverter, ParentWindowHandle, WxpGuiResizeHandle, WxpGuiRuntime, gui_size_to_logical,
-};
+use wrac_wxp_gui::{DpiConverter, ParentWindowHandle, WxpGuiResizeHandle, WxpGuiRuntime};
 use wxp::{WebContext, WxpCommandHandler, WxpWebView, WxpWebViewBuilder, dpi::LogicalSize};
 
 use crate::commands::register_commands;
@@ -32,10 +30,6 @@ pub(super) const MAX_GUI_SIZE: GuiSize = GuiSize {
     width: 720,
     height: 720,
 };
-
-// Logical-pixel bounds applied when clamping a resize request.
-const MIN_LOGICAL_GUI_SIZE: LogicalSize<f64> = LogicalSize::new(320.0, 340.0);
-const MAX_LOGICAL_GUI_SIZE: LogicalSize<f64> = LogicalSize::new(720.0, 720.0);
 
 // Embed the frontend zip only for release builds; debug builds use the Vite dev server.
 #[cfg(not(debug_assertions))]
@@ -114,7 +108,7 @@ impl WracGainGuiRuntime {
         let mut wxp_context = WebContext::new(data_dir);
         // Initial scale is 1.0; the host will override it via `set_scale` later.
         let dpi_converter = DpiConverter::new(1.0);
-        let gui_size = gui_size_to_logical(initial_size);
+        let gui_size = dpi_converter.gui_size_to_logical(initial_size);
         let bounds = dpi_converter.create_webview_bounds(gui_size);
         log::debug!(
             "creating GUI runtime: computed logical size: width={}, height={}",
@@ -198,15 +192,11 @@ impl WxpGuiRuntime for WracGainGuiRuntime {
 
     /// Called when the host changes the window size. Clamps to the valid range before applying.
     fn set_size(&mut self, size: GuiSize) -> PluginResult<()> {
-        let requested = LogicalSize::new(size.width as f64, size.height as f64);
-        self.gui_size = LogicalSize::new(
-            requested
-                .width
-                .clamp(MIN_LOGICAL_GUI_SIZE.width, MAX_LOGICAL_GUI_SIZE.width),
-            requested
-                .height
-                .clamp(MIN_LOGICAL_GUI_SIZE.height, MAX_LOGICAL_GUI_SIZE.height),
-        );
+        let clamped = GuiSize {
+            width: size.width.clamp(MIN_GUI_SIZE.width, MAX_GUI_SIZE.width),
+            height: size.height.clamp(MIN_GUI_SIZE.height, MAX_GUI_SIZE.height),
+        };
+        self.gui_size = self.dpi_converter.gui_size_to_logical(clamped);
         log::debug!(
             "setting GUI size: requested_width={}, requested_height={}, applied_width={}, applied_height={}",
             size.width,
