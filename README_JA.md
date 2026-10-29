@@ -1,10 +1,7 @@
 # wrac-examples
 
-[WRAC Plugin Template](https://github.com/novonotes/wrac-plugin-template) の補助的なサンプルプラグイン集です。
-
-このリポジトリは `wrac-plugin-template` とあわせて参照する補助リポジトリです。
-WRAC スタックによるオーディオプラグイン開発について知りたい場合、まず `wrac-plugin-template` を参照してください。
-このリポジトリは、追加の実装例を確認したい場合に使います。
+このリポジトリの保守と WRAC API の変更への追随は終了しました。
+現在の実装例は、[WRAC Plugin Template](https://github.com/novonotes/wrac-plugin-template) の [WRAC Gain](https://github.com/novonotes/wrac-plugin-template/tree/main/plugins/wrac-gain) を参照してください。
 
 > English version: [README.md](README.md)
 
@@ -138,5 +135,5 @@ dev server の URL は Vite 側と Rust 側のどちらも `http://127.0.0.1:517
 メインプロジェクトは [wrac-plugin-template](https://github.com/novonotes/wrac-plugin-template) です。
 テンプレート、セットアップガイド、ビルドワークフロー、サポート窓口はそちらにあります。
 
-このリポジトリは、そのテンプレートから作られた補助的なサンプルだけを含みます。
+このリポジトリには、そのテンプレートから作られた過去のサンプルが含まれています。
 質問、フィードバック、互換性レポートは [wrac-plugin-template issues](https://github.com/novonotes/wrac-plugin-template/issues) または [discussions](https://github.com/novonotes/wrac-plugin-template/discussions) を使ってください。
