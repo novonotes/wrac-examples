@@ -1,10 +1,7 @@
 # wrac-examples
 
-Supplemental example plugins for [WRAC Plugin Template](https://github.com/novonotes/wrac-plugin-template).
-
-This repository is a companion to `wrac-plugin-template`.
-If you want to learn about audio plugin development with the WRAC stack, start with `wrac-plugin-template`.
-Use this repository when you want to inspect additional example implementations.
+This repository is no longer maintained or updated for WRAC API changes.
+For a current implementation example, see [WRAC Gain](https://github.com/novonotes/wrac-plugin-template/tree/main/plugins/wrac-gain) in [WRAC Plugin Template](https://github.com/novonotes/wrac-plugin-template).
 
 > 日本語版: [README_JA.md](README_JA.md)
 
@@ -137,5 +134,5 @@ If port 5173 is already in use, the simplest fix is usually to stop the other pr
 
 The main project is [wrac-plugin-template](https://github.com/novonotes/wrac-plugin-template). It contains the template, setup guide, build workflow, and support channels.
 
-This repository only contains supplemental examples built from that template.
+This repository contains historical examples built from that template.
 Please use the [wrac-plugin-template issues](https://github.com/novonotes/wrac-plugin-template/issues) or [discussions](https://github.com/novonotes/wrac-plugin-template/discussions) for questions, feedback, and compatibility reports.
